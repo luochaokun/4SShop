@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 配置dao借口类的mapper的映射文件： -->
+<mapper namespace="com.direct.dao.IApplyDao">
+	<!-- 配置检索结果集时属性和字段的对应关系 -->
+	<resultMap type="ApplyInfo" id="appMap">
+		<id property="aId" column="aId"/><!-- 主键字段 -->
+		
+		<result column="appName" property="appName"/>
+		<result column="phone" property="phone"/>
+		<result column="money" property="money"/>
+		<result column="outmoney" property="outmoney"/>
+		<result column="inmoney" property="inmoney"/>
+		<result column="appTime" property="appTime" />
+		<result column="remark" property="remark"/>
+		<result column="state" property="state"/>
+		<result column="exaName" property="exaName"/>
+	
+	</resultMap>
+
+
+	
+	<!-- 添加 -->
+	<insert id="insertApp" parameterType="ApplyInfo">
+		insert into apply(appName,phone,money,appTime,remark) values(#{appName},#{phone},#{money},curdate(),#{remark})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="updateApp" parameterType="ApplyInfo">
+		update apply set outmoney=#{outmoney},inmoney=#{inmoney},state=#{state},exaName=#{exaName} where aId=#{aId}
+	</update>
+	
+	<!-- 删除部门信息 -->
+  		<delete id="deleteApp" parameterType="int">
+  			delete from apply where aId=#{aId}
+  		</delete>
+	
+	<!-- 查询 -->
+	<select id="selectApp" parameterType="ApplyInfo" resultMap="appMap">
+		select * from apply
+		<where>
+			<if test="appName!=''">
+				appName like "%"#{appName}"%"
+			</if>
+		</where> 
+		order by aId desc
+	</select>
+
+	<!-- 查询申请信息 -->
+	<select id="selectById" resultMap="appMap">
+		select * from apply  			
+	</select>
+</mapper>

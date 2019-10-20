@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.direct.dao.IHireInfoDao">
+  	<resultMap type="HireInfo" id="hirMap">
+  		<id column="hid" property="hid"/>
+  		<result column="name" property="name"/>
+  		<result column="phone" property="phone"/>
+  		<result column="email" property="email"/>
+  		<result column="diploma" property="diploma"/>
+  		<result column="state" property="state"/>
+  		<result column="remark" property="remark"/>
+  		<!-- 外键关联 -->
+  		<association property="rec" javaType="RecruitmentInfo">
+  			<id column="rid" property="rid"/>
+  			<result column="requires" property="requires"/>
+  			<result column="describes" property="describes"/>
+  			<result column="beginTime" property="beginTime"/>
+  			<result column="endTime" property="endTime"/>
+  			<!-- 关联职位 -->
+	  		<association property="pos" javaType="PositionInfo">
+	  			<id column="pid" property="pid"/>
+	  			<result column="pname" property="pname"/>
+	  		</association>
+	  		<!-- 关联部门 -->
+	  		<association property="dept" javaType="DepartmentInfo">
+	  			<id column="deptId" property="deptId"/>
+	  			<result column="deptName" property="deptName"/>
+	  		</association>
+  		</association>
+  	</resultMap>
+  	<!-- 审核方法（修改） -->
+  	<update id="update" parameterType="HireInfo">
+  		update HireInfo set state=#{state} where hid=#{hid}
+  	</update>
+  	 <!-- 逻辑删除方法 -->
+  	 <update id="delete" parameterType="HireInfo">
+  	 	update HireInfo set name='删除' where hid in
+ 		<foreach collection="list" index="index" item="ids" open="(" separator="," close=")" >
+ 			#{ids}
+ 		</foreach>
+  	 </update>
+  	<!-- 分页查询（模糊） -->
+  	<select id="select" resultMap="hirMap">
+  		select hid,name,phone,email,state,re.*,po.*,de.* from HireInfo hi 
+  		inner join RecruitmentInfo re on re.rid=hi.rid 
+  		inner join positioninfo po on po.pid=re.pid 
+  		inner join departmentInfo de on de.deptId=re.deptId
+  		where name!='删除' and
+  			name like concat('%',#{hi},'%') or phone like concat('%',#{hi},'%') or email like concat('%',#{hi},'%')
+  			or hi.diploma like concat('%',#{hi},'%') or state like concat('%',#{hi},'%') or hi.remark like concat('%',#{hi},'%')
+  		
+  		
+  	</select>
+  </mapper>

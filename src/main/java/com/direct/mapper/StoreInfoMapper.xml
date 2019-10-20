@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.IStoreInfoDao">
+	<resultMap type="StoreInfoEntity" id="StoreMap">
+		<id property="sid" column="sid"/>
+		<result property="name" column="name"/>
+		<result property="img" column="img"/>
+		<result property="address" column="address"/>
+		<result property="phone" column="phone"/>
+	</resultMap>
+	
+	<select id="queryStore" resultMap="StoreMap">
+		select * from storeInfo
+	</select>
+	<delete id="deleteStore" parameterType="int">
+		delete from storeInfo where sid=#{sid}
+	</delete>
+		<update id="updateStoreIn" parameterType="StoreInfoEntity">
+		update storeInfo set name=#{name},phone=#{phone},address=#{address} where sid=#{sid}
+	</update>
+	<insert id="insertStore" parameterType="StoreInfoEntity">
+		insert into storeInfo values(0,#{name},#{phone},#{img},#{address})
+	</insert>
+
+	<select id="queryStore1" parameterType="StoreInfoEntity" resultMap="StoreMap">
+		select *from storeInfo order by sid desc
+	</select>
+
+</mapper>

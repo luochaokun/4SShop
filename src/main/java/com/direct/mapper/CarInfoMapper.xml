@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.direct.dao.ICarInfoDao">
+		<resultMap type="CarInfo" id="CarInfoMap">
+			<id property="cid" column="cid"/>
+			<result property="cname" column="cname"/>
+			<result property="price" column="price"/>
+			<result property="number" column="number"/>
+			<result property="length" column="length"/>
+			<result property="width" column="width"/>
+			<result property="height" column="height"/>
+			<result property="wheelbase" column="wheelbase"/>
+			<result property="Tread" column="Tread"/>
+			<result property="curbWeight" column="curbWeight"/>
+			<result property="tyre" column="tyre"/>
+			<result property="tankVolume" column="tankVolume"/>
+			<result property="enginea" column="enginea"/>
+			<result property="displacement" column="displacement"/>
+			<result property="imga" column="imga"/>
+			<result property="imgb" column="imgb"/>
+		</resultMap>
+		
+		<resultMap type="VehicleSystemEntity" id="VehicleSysmap">
+			<id property="sid" column="sid"/>
+			<result property="sname" column="sname"/>
+		</resultMap>
+		
+		<select id="queryCarInfo"  resultMap="CarInfoMap">
+			select * from carinfo
+		</select>
+		<select id="queryCarInfoById" parameterType="int" resultMap="CarInfoMap">
+			select * from carinfo where cid=#{id}
+		</select>
+		<insert id="insertCarInfo" parameterType="CarInfo">
+			insert into carinfo values(null,#{sid},1,#{cname},#{price},#{number},#{length},#{width},#{height}
+			,#{wheelbase},#{Tread},#{curbWeight},#{tyre},#{tankVolume},#{enginea},#{displacement},'img','b')
+		</insert>
+		<update id="updateCarInfo" parameterType="CarInfo">
+			update carinfo set cname=#{cname},price=#{price},number=#{number},length=#{length},width=#{width},height=#{height}
+			,wheelbase=#{wheelbase},Tread=#{Tread},curbWeight=#{curbWeight},tyre=#{tyre},tankVolume=#{tankVolume},enginea=#{enginea},displacement=#{displacement},imga='a',imgb='b'
+			where cid=#{cid}
+		</update>
+		<delete id="deleteCarInfo" parameterType="CarInfo">
+				delete from carinfo where cid=#{id}
+		</delete>
+		
+		<!-- 查询员工信息 -->
+		<select id="selectCarById" resultMap="CarInfoMap">
+			select * from carinfo
+		</select>
+		<select id="queryCarVehicleSystem" resultMap="VehicleSysmap">
+			select * from vehicle_system
+		</select>
+	</mapper>
+	
+	

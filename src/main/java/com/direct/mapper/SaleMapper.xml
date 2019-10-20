@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 配置dao借口类的mapper的映射文件： -->
+<mapper namespace="com.direct.dao.ISaleDao">
+	<!-- 配置检索结果集时属性和字段的对应关系 -->
+	<resultMap type="SaleInfo" id="salMap">
+		<id property="sid" column="sid"/><!-- 主键字段 -->
+		
+		<result column="saleTime" property="saleTime"/>
+		<result column="advance" property="advance"/>
+		<result column="receipts" property="receipts"/>
+		<result column="receivable" property="receivable"/>
+		
+		<association property="empInfo" javaType="EmployeeInfoEntity" resultMap="empMaps" />
+		<association property="cusInfo" javaType="CustomerInfo" resultMap="cusMaps" />
+		<association property="carInfo" javaType="CarInfo" resultMap="carMaps" />
+	</resultMap>
+	
+
+	<resultMap type="EmployeeInfoEntity" id="empMaps">
+			<id column="empId" property="empId"/>
+	 		<result column="empName" property="empName"/>
+	 		<result column="salary" property="salary"/>
+	 		<result column="sex" property="sex"/>
+	 		<result column="inTime" property="inTime"/>
+	 		<result column="outTime" property="outTime"/>
+	 		<result column="birthday" property="birthday"/>
+	 		<result column="cardId" property="cardId"/>
+	 		<result column="phone" property="phone"/>
+	 		<result column="email" property="email"/>
+	 		<result column="address" property="address"/>
+	 		<result column="state" property="state"/>
+	 		<result column="diploma" property="diploma"/>
+	 		<result column="sadmin" property="sadmin"/>
+	 		<result column="sPwd" property="sPwd"/>
+	 		<result column="remark" property="remark"/>
+	 		
+	 		<association property="pos" javaType="PositionInfo">
+	 			<id column="pid" property="pid"/>
+		 		<result column="pname" property="pname"/>
+		 		<result column="pids" property="pids"/>
+		 		<result column="remark" property="remark"/>
+		 		
+		 		<association property="dept" javaType="DepartmentInfo">
+		 			<id column="deptId" property="deptId"/>
+			  		<result column="deptName" property="deptName"/>
+			  		<result column="remark" property="remark"/>
+		 		</association>
+	 		</association>
+	</resultMap>
+	
+	
+	<resultMap type="CustomerInfo" id="cusMaps">
+		<id property="cid" column="cid"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="address" column="address"/>
+		<result property="idcard" column="idcard"/>
+		<result property="consumption" column="consumption"/>
+	</resultMap>
+	
+	<resultMap type="CarInfo" id="carMaps">
+		<id column="cid" property="cid"/>
+			
+	 		<result column="sid" property="sid"/>
+	 		<result column="wid" property="wid"/>
+	 		<result column="cname" property="cname"/>
+	 		<result column="price" property="price"/>
+	 		<result column="number" property="number"/>
+	 		<result column="length" property="length"/>
+	 		<result column="width" property="width"/>
+	 		<result column="height" property="height"/>
+	 		<result column="wheelbase" property="wheelbase"/>
+	 		<result column="Tread" property="Tread"/>
+	 		<result column="curbWeight" property="curbWeight"/>
+	 		<result column="tyre" property="tyre"/>
+	 		<result column="tankVolume" property="tankVolume"/>
+	 		<result column="enginea" property="enginea"/>
+	 		<result column="displacement" property="displacement"/>
+	 		<result column="imga" property="imga"/>
+	 		<result column="imgb" property="imgb"/>
+	</resultMap>
+	
+	<!-- 添加 -->
+	<insert id="insertSal" parameterType="SaleInfo">
+		insert into sale(empId,userId,carId,saleTime,advance,receipts,receivable) values(#{empInfo.empId},#{cusInfo.cid},#{carInfo.cid},curdate(),#{advance},#{receipts},#{receivable})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="updateSal" parameterType="SaleInfo">
+		update sale set receipts=#{receipts},advance=#{advance} where sid=#{sid}
+	</update>
+	
+	<!-- 删除 -->
+  		<delete id="deleteSal" parameterType="int">
+  			delete from sale where sid=#{sid}
+  		</delete>
+	
+	<!-- 查询 -->
+	<select id="selectSal" parameterType="SaleInfo" resultMap="salMap">
+		select * from sale sa inner join employeeInfo em on sa.empId=em.empId inner join CustomerInfo cu on sa.userid=cu.cid inner join carInfo ca on sa.carId=ca.cid order by sa.sid desc
+
+	</select>
+
+</mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.IEmployeeInfoDao">
+	
+	<!-- 调岗表的 -->
+	<resultMap type="TransferInfo" id="traEmp">
+		    <id column="id" property="id"/>
+	 		<result column="jdep" property="jdep"/>
+	 		<result column="jformer" property="jformer"/>
+	 		<result column="expendTime" property="expendTime"/>
+	 		<result column="remark" property="remark"/>
+	 		<!-- 外键关联职位 -->
+	 		<association property="former" javaType="PositionInfo">
+	 			<id column="pid" property="pid"/>
+		 		<result column="pname" property="pname"/>
+		 		<result column="pids" property="pids"/>
+		 		<result column="remark" property="remark"/>
+		 		<!-- 外键关联部门 -->
+		 		<association property="dept" javaType="DepartmentInfo">
+		 			<id column="deptId" property="deptId"/>
+			  		<result column="deptName" property="deptName"/>
+			  		<result column="remark" property="remark"/>
+		 		</association>
+		 	</association>	
+		 	<!-- 外键关联员工 -->
+		 	<association property="emp" javaType="EmployeeInfoEntity">
+		 		<id column="empId" property="empId"/>
+	 			<result column="empName" property="empName"/>
+		 	</association>	
+	</resultMap>
+	<!-- 员工表的 -->
+	<resultMap type="EmployeeInfoEntity" id="empc">
+ 			<id column="empId" property="empId"/>
+	 		<result column="empName" property="empName"/>
+	 		<result column="salary" property="salary"/>
+	 		<result column="sex" property="sex"/>
+	 		<result column="inTime" property="inTime"/>
+	 		<result column="outTime" property="outTime"/>
+	 		<result column="birthday" property="birthday"/>
+	 		<result column="cardId" property="cardId"/>
+	 		<result column="phone" property="phone"/>
+	 		<result column="email" property="email"/>
+	 		<result column="address" property="address"/>
+	 		<result column="state" property="state"/>
+	 		<result column="diploma" property="diploma"/>
+	 		<result column="sadmin" property="sadmin"/>
+	 		<result column="sPwd" property="sPwd"/>
+	 		<result column="remark" property="remark"/>
+	 		
+	 		<association property="pos" javaType="PositionInfo">
+	 			<id column="pid" property="pid"/>
+		 		<result column="pname" property="pname"/>
+		 		<result column="pids" property="pids"/>
+		 		<result column="remark" property="remark"/>
+		 		
+		 		<association property="dept" javaType="DepartmentInfo">
+		 			<id column="deptId" property="deptId"/>
+			  		<result column="deptName" property="deptName"/>
+			  		<result column="remark" property="remark"/>
+		 		</association>
+	 		</association>
+ 	</resultMap>
+ 	
+ 
+ 	
+ 	<!-- 根据Id查询单条信息 -->
+ 	<select id="selEmpId" parameterType="int" resultMap="empc">
+ 		select * from employeeInfo ee inner join positioninfo pe on ee.pid=pe.pid inner join departmentInfo dt on pe.deptId=dt.deptId where empId=#{id} 
+ 	</select>	
+ 	
+ 	<!-- 根据员工账户密码查询单条信息 -->
+ 	<select id="login" parameterType="EmployeeInfoEntity" resultMap="empc">
+ 		select * from employeeInfo ee inner join positioninfo pe on ee.pid=pe.pid inner join departmentInfo dt on pe.deptId=dt.deptId where sadmin=#{sadmin} and sPwd=#{sPwd}
+ 	</select>
+ 	
+ 	
+ 	<!-- 分页查询所有信息（模糊） -->
+ 	<select id="selEmp" parameterType="EmployeeInfoEntity" resultMap="empc">
+ 		select * from employeeInfo ee inner join positioninfo pe on ee.pid=pe.pid inner join departmentInfo dt on pe.deptId=dt.deptId
+ 		where empName!='删除'
+ 		<if test="empName!='' and empName!=null">
+ 			and empName like concat(concat('%',#{empName},'%'))
+ 		</if>
+ 		<if test="birthday!='' and birthday!=null">
+ 			and select YEAR(curdate())-YEAR(birthday) from employeeInfo 
+ 		</if>
+ 	</select>
+ 	<!-- 员工离职 -->
+ 	<update id="updateLz" parameterType="EmployeeInfoEntity">
+ 		update employeeInfo set outTime=CURDATE(),state=0 where empId in
+ 		<foreach collection="list" index="index" item="ids" open="(" separator="," close=")" >
+ 			#{ids}
+ 		</foreach>
+ 		
+ 	</update>
+ 	<!-- 调岗之前根据Id查询单条信息 -->
+ 	<select id="selectTg"  resultMap="empc">
+		select *from departmentInfo de inner join positioninfo po on de.deptId=po.deptId inner join employeeInfo em on em.pid=po.pid where empId=#{empId};
+ 	</select>	
+ 	<!-- 员工调岗 -->
+ 	<update id="updateTg" parameterType="TransferInfo">
+       update employeeInfo set pid=#{former.pid} where empId=#{emp.empId}
+ 	</update>
+ 	<!-- 员工调岗生产记录表 -->
+ 	<insert id="updateJub"  parameterType="TransferInfo" >
+ 		insert into transfer(empId,jdep,jformer,former,expendTime,remark) values(#{emp.empId},#{jdep},#{jformer},#{former.pid},#{expendTime},#{remark})
+ 	</insert>
+ 	<!-- 分页查询调岗记录表（模糊） -->
+ 	<select id="selectTgjl" parameterType="TransferInfo" resultMap="traEmp">
+ 		select * from transfer tr inner join employeeInfo em on tr.empId=em.empId inner join positioninfo po on po.pid=tr.former inner join departmentInfo de on de.deptId=po.deptId
+ 			<if test="emp.empName!=null">
+ 				and tr.empId like concat(concat('%',#{emp.empName},'%'))
+ 			</if>
+ 			
+ 	</select>
+ 	<!-- 添加员工 -->
+ 	<insert id="insertEmp" parameterType="EmployeeInfoEntity">
+ 		insert into employeeInfo(empName,pid,salary,sex,inTime,birthday,cardId,phone,email,address,state,diploma,sadmin,sPwd) values
+		(#{empName},#{pos.pid},#{salary},#{sex},#{inTime},#{birthday},#{cardId},#{phone},#{email},#{address},#{state},#{diploma},#{sadmin},#{sPwd})
+ 	</insert>
+ 	<!-- 删除员工 -->
+ 	<delete id="deleteEmp" parameterType="int">
+ 		update employeeInfo set empName='删除' where empId=#{empId}
+ 	</delete>
+ 	<!-- 修改员工 -->
+ 	<update id="updateEmp" parameterType="EmployeeInfoEntity">
+		update employeeInfo set empName=#{empName},pid=#{pos.pid},sex=#{sex},inTime=#{inTime},birthday=#{birthday},phone=#{phone},email=#{email},address=#{address},diploma=#{diploma},sadmin=#{sadmin},sPwd=#{sPwd} where empId=#{empId}
+ 	</update>
+ 	
+ 	<!-- 查询员工信息 -->
+		<select id="selectEmpById" resultMap="empc">
+			select * from employeeInfo ee inner join positioninfo pe on ee.pid=pe.pid inner join departmentInfo dt on pe.deptId=dt.deptId where empName!='删除' 			
+		</select>
+ 	
+</mapper>

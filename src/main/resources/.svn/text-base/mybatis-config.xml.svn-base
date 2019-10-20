@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  	<configuration>
+	  	
+	<!-- 为实体类取别名 -->
+	  	<typeAliases>
+	  		<typeAlias type="com.direct.entity.CustomerInfo"  alias="CustomerInfo"/>
+	  		<typeAlias type="com.direct.entity.DepartmentInfo"  alias="DepartmentInfo"/>
+	  		<typeAlias type="com.direct.entity.LeaveTypeEntity"  alias="LT"/>
+	  		<typeAlias type="com.direct.entity.LeaveInfoEntity"  alias="LE"/>
+	  		<typeAlias type="com.direct.entity.EmployeeInfoEntity"  alias="EmployeeInfoEntity"/>
+	  		<typeAlias type="com.direct.entity.StoreInfoEntity"  alias="StoreInfoEntity"/>
+	  		<typeAlias type="com.direct.entity.EmployeeInfoEntity"  alias="EMP"/>
+	  		<typeAlias type="com.direct.entity.ApplyInfo"  alias="ApplyInfo"/>
+	  		<typeAlias type="com.direct.entity.PositionInfoEntity"  alias="PositionInfo"/>
+	  		<typeAlias type="com.direct.entity.CarBuying"  alias="CarBuying"/>
+	  		<typeAlias type="com.direct.entity.CarInfo"  alias="CarInfo"/>
+
+			<typeAlias type="com.direct.entity.VehicleTypeEntity" alias="VehicleType"/>
+			<typeAlias type="com.direct.entity.VehicleSystemEntity" alias="VehicleSystem"/>
+	  		<typeAlias type="com.direct.entity.TransferInfo"  alias="TransferInfo"/>
+
+	  		<typeAlias type="com.direct.entity.MakeAnAppointmentEntity" alias="makean"/>
+	  		<typeAlias type="com.direct.entity.KaoQinInfoEntity"  alias="KaoQinInfo"/>
+	  		<typeAlias type="com.direct.entity.SalaryEntity"  alias="Salary"/>
+	  		
+
+	  		<typeAlias type="com.direct.entity.SaleInfo"  alias="SaleInfo"/>
+
+	  		<typeAlias type="com.direct.entity.VehicleSystemEntity" alias="VehicleSystemEntity"/>
+	  		<typeAlias type="com.direct.entity.OutTypeEntity" alias="OutTypeEntity"/>
+	  		<typeAlias type="com.direct.entity.RecruitmentInfo" alias="RecruitmentInfo"/>
+			<typeAlias type="com.direct.entity.ExpenditureEntity" alias="ExpenditureEntity"/>
+			<typeAlias type="com.direct.entity.HireInfo" alias="HireInfo"/>
+
+
+	  	</typeAliases>
+
+		<!-- 分页插件 -->
+		<plugins> 
+			<plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+		</plugins>
+
+	
+
+	<!-- 关联映射文件 -->
+	<mappers>
+		<mapper resource="com/direct/mapper/ApplyMapper.xml"/>
+		<mapper resource="com/direct/mapper/CustomerInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/DepartmentInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/LeaveTypeMapper.xml"/>
+		<mapper resource="com/direct/mapper/LeaveInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/EmployeeInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/PositionInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/StoreInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/CarBuyingMapper.xml"/>
+		<mapper resource="com/direct/mapper/SourceTableMapper.xml"/>
+		<mapper resource="com/direct/mapper/MakeAnAppointment.xml"/>
+		<mapper resource="com/direct/mapper/CarInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/KaoQinInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/SalaryMapper.xml"/>
+		<mapper resource="com/direct/mapper/SaleMapper.xml"/>
+		<mapper resource="com/direct/mapper/Expenditure.xml"/>
+		<mapper resource="com/direct/mapper/RecruitmentInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/HireInfoMapper.xml"/>
+		<mapper resource="com/direct/mapper/VehicleSystemmapper.xml"/>
+	</mappers>
+
+
+		
+	
+  </configuration>

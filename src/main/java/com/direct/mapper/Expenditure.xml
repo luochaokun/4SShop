@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.direct.dao.IExpenditureDao">
+    
+    	<resultMap type="ExpenditureEntity" id="Expendituremap">
+    		<id property="eid" column="eid"/>
+    		<result property="money" column="money"/>
+    		<result property="expTime" column="expTime"/>
+    		<result property="account" column="account"/>
+    		<result property="remark" column="remark"/>
+    		<!-- 配置外键列(对象) -->
+			<association property="outType" javaType="OutTypeEntity" resultMap="OutTypemap" />
+				<association property="staff" javaType="EMP" resultMap="staffmap" />
+    	</resultMap>
+    
+    	<resultMap type="OutTypeEntity" id="OutTypemap">
+    		<id property="typeId" column="typeId"/>
+    		<result property="typeName" column="typeName"/>
+    	</resultMap>
+    	
+    	<!-- 员工表的 -->
+		<resultMap type="EMP" id="staffmap">
+			<id column="empId" property="empId"/>
+	 		<result column="empName" property="empName"/>
+		</resultMap>
+    	
+    	
+    
+    <insert id="insertOutType" parameterType="OutTypeEntity">
+    	insert into outType values(null,#{typeName})
+    </insert>
+    <update id="updateOutType" parameterType="OutTypeEntity">
+    	update outType set typeName=#{typeName} where typeId=#{typeId}
+    </update>
+    <delete id="deleteOutType" parameterType="int">
+    	delete from outType where typeId=#{id}
+    </delete>
+    <select id="queryOutType" resultMap="OutTypemap">
+    	select * from outType
+    </select>
+    <select id="queryOutTypeById" parameterType="int" resultMap="OutTypemap">
+    	select * from outType where typeId=#{id}
+    </select>
+    
+    <select id="queryExpenditure" resultMap="Expendituremap">
+    	select expenditure.*,employeeinfo.empId,employeeinfo.empName,outtype.* from expenditure INNER JOIN employeeinfo ON employeeinfo.empId=expenditure.emPid INNER JOIN outtype ON expenditure.typeId=outtype.typeId  ORDER BY eid ASC
+    </select>
+    
+    <insert id="insertExpenditure" parameterType="ExpenditureEntity">
+    	insert into expenditure values(null,#{outType.typeId},#{money},#{staff.empId},#{expTime},#{account},#{remark})
+    </insert>
+    
+    <select id="queryStaff" resultMap="staffmap">
+    	SELECT * from employeeinfo
+    </select>
+    </mapper>

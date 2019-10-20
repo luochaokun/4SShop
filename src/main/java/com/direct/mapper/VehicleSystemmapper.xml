@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.direct.dao.IVehicleSystemDao">
+    	<resultMap type="VehicleSystemEntity" id="Ve">
+    		<id property="sid" column="sid"/>
+    		<result property="sname" column="sname"/>
+    		<result property="img" column="img"/>
+    		<association property="vsid" javaType="VehicleType" resultMap="Veh"/>
+    	</resultMap>
+    	<resultMap type="VehicleType" id="Veh">
+    			<id property="vid" column="vid"/>
+    			<result property="vname" column="vname"/>
+    	</resultMap>
+    	
+    	
+    	<select id="select" resultMap="Ve">
+    		select * from vehicle_System
+    	</select>
+    </mapper>

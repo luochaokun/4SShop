@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.direct.dao.MakeAnAppointmentDao">
+    	<resultMap type="makean" id="ma">
+    		<id property="mid" column="mid"/>
+    		<result property="name" column="name"/>
+    		<result property="phone" column="phone"/>
+    		<result property="time" column="time"/>
+    		
+    		<association property="sid" javaType="StoreInfoEntity">
+    			<id property="sid" column="sid"/>
+				<result property="name" column="name"/>
+				<result property="img" column="img"/>
+				<result property="address" column="address"/>
+				<result property="phone" column="phone"/>
+    		</association>
+    	</resultMap>
+    		
+    	<insert id="addMake" parameterType="makean">
+    		insert into makeAnAppointment values(0,#{name},#{phone},1,#{time})
+    	</insert>
+    	
+    	<delete id="deletemake" parameterType="int">
+		delete from makeAnAppointment where mid=#{mid}
+		</delete>
+		<update id="updatemake" parameterType="makean">
+			<!-- update makeAnAppointment set name=#{name},phone=#{phone},sid=#{sid},time=#{time},address=#{address} where mid=#{mid} -->
+		</update>
+
+		<select id="querymake" parameterType="makean" resultMap="ma">
+			select *from makeAnAppointment
+			<where>
+				<if test="name !='' ">
+					name like "%"#{name}"%"
+				</if>
+			</where> 
+			 order by mid desc
+		</select>
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    </mapper>

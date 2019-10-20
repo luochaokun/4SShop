@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.IKaoQinInfoDao">
+
+	<resultMap type="KaoQinInfo" id="kq">
+ 			<id column="id" property="id"/>
+	 		<result column="time" property="time"/>
+	 		<result column="startJobTime" property="startJobTime"/>
+	 		<result column="startCardTime" property="startCardTime"/>
+	 		<result column="stopJobTime" property="stopJobTime"/>
+	 		<result column="stopCardTime" property="stopCardTime"/>
+	 		<result column="jobState" property="jobState"/>
+	 		
+	 		<association property="emp" javaType="EmployeeInfoEntity">
+	 			<id column="empId" property="empId"/>
+		 		<result column="empName" property="empName"/>
+		 		<result column="salary" property="salary"/>
+		 		<result column="sex" property="sex"/>
+		 		<result column="inTime" property="inTime"/>
+		 		<result column="outTime" property="outTime"/>
+		 		<result column="birthday" property="birthday"/>
+		 		<result column="cardId" property="cardId"/>
+		 		<result column="phone" property="phone"/>
+		 		<result column="email" property="email"/>
+		 		<result column="address" property="address"/>
+		 		<result column="state" property="state"/>
+		 		<result column="diploma" property="diploma"/>
+		 		<result column="sadmin" property="sadmin"/>
+		 		<result column="sPwd" property="sPwd"/>
+		 		<result column="remark" property="remark"/>
+		 		
+		 		<association property="pos" javaType="PositionInfo">
+		 			<id column="pid" property="pid"/>
+			 		<result column="pname" property="pname"/>
+			 		<result column="pids" property="pids"/>
+			 		<result column="remark" property="remark"/>
+			 		
+			 		<association property="dept" javaType="DepartmentInfo">
+			 			<id column="deptId" property="deptId"/>
+				  		<result column="deptName" property="deptName"/>
+				  		<result column="remark" property="remark"/>
+			 		</association>
+		 		</association>
+	 		</association>
+ 	</resultMap>
+ 	
+ 	<!-- 添加 -->
+	<insert id="addKq" parameterType="KaoQinInfo">
+		insert into kaoQinInfo(empId,time,startJobTime,startCardTime,stopJobTime,stopCardTime,jobState) values (#{emp.empId},curdate(),concat(curdate(),' 8:30:00'),now(),concat(curdate(),' 17:30:00'),null,'');
+	</insert>
+	
+	<!-- 修改查询 -->
+	<select id="selkqId" parameterType="int" resultMap="kq">
+		select * from kaoQinInfo kq inner join  employeeInfo emp on kq.empId=emp.empId where kq.empId=#{id} and time=curdate()
+	</select>
+	
+	<update id="upKq" parameterType="KaoQinInfo">
+		update kaoQinInfo set stopCardTime=now() where empId=#{emp.empId}  and time=curdate()
+	</update>
+
+	<update id="upjobState" parameterType="int">
+		call pro_jobState(#{id})
+	</update>
+	<!-- 查询一条 -->
+	<select id="selkq" parameterType="int" resultMap="kq">
+		select * from kaoQinInfo kq inner join  employeeInfo emp on kq.empId=emp.empId where kq.empId=#{id} order by  id  desc
+	</select>
+	
+	<!-- 分页查询(使用插件) -->
+	<select id="selkqAll" parameterType="KaoQinInfo" resultMap="kq">
+		select * from kaoQinInfo kq inner join employeeInfo em on kq.empId=em.empId inner join positioninfo pe on em.pid=pe.pid inner join departmentInfo dt on pe.deptId=dt.deptId
+		<where>
+			<if test="emp != null">
+		       <if test="emp.empName != null and emp.empName!='' ">
+			        empName like concat(concat('%',#{emp.empName},'%'))
+			    </if>
+		    </if>
+		 </where>
+		order by id desc
+	</select>
+</mapper>

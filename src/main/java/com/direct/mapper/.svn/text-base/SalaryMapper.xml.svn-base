@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.ISalaryDao">
+
+	<resultMap type="Salary" id="SA">
+ 			<id column="sid" property="sid"/>
+	 		<result column="smonth" property="smonth"/>
+	 		<result column="financial" property="financial"/>
+	 		<result column="deduction" property="deduction"/>
+	 		<result column="answer" property="answer"/>
+	 		<result column="reals" property="reals"/>
+	 		<result column="modes" property="modes"/>
+	 		<result column="outTime" property="outTime"/>
+	 		<result column="state" property="state"/>
+	 		<result column="namea" property="namea"/>
+	 		<result column="remark" property="remark"/>
+	 		
+	 		<association property="emp" javaType="EmployeeInfoEntity">
+	 			<id column="empId" property="empId"/>
+		 		<result column="empName" property="empName"/>
+		 		<result column="salary" property="salary"/>
+		 		<result column="sex" property="sex"/>
+		 		<result column="inTime" property="inTime"/>
+		 		<result column="outTime" property="outTime"/>
+		 		<result column="birthday" property="birthday"/>
+		 		<result column="cardId" property="cardId"/>
+		 		<result column="phone" property="phone"/>
+		 		<result column="email" property="email"/>
+		 		<result column="address" property="address"/>
+		 		<result column="state" property="state"/>
+		 		<result column="diploma" property="diploma"/>
+		 		<result column="sadmin" property="sadmin"/>
+		 		<result column="sPwd" property="sPwd"/>
+		 		<result column="remark" property="remark"/>
+		 		
+		 		<association property="pos" javaType="PositionInfo">
+		 			<id column="pid" property="pid"/>
+			 		<result column="pname" property="pname"/>
+			 		<result column="pids" property="pids"/>
+			 		<result column="remark" property="remark"/>
+			 		
+			 		<association property="dept" javaType="DepartmentInfo">
+			 			<id column="deptId" property="deptId"/>
+				  		<result column="deptName" property="deptName"/>
+				  		<result column="remark" property="remark"/>
+			 		</association>
+		 		</association>
+	 		</association>
+ 	</resultMap>
+	
+	
+	<insert id="add" parameterType="int">
+		insert into salary(empId,smonth,financial,deduction,answer,reals,modes,outTime,state,namea,remark) values(#{empId},CONCAT(YEAR(CURDATE()),'-',IF(MONTH(CURDATE()) &lt; 10,CONCAT('0',MONTH(CURDATE())),MONTH(CURDATE()))),null,null,null,null,null,null,0,null,null);
+	</insert>
+	
+	<update id="addId" parameterType="int">
+		call pro_pro_salary(#{id})
+	</update>
+	
+	<update id="up" parameterType="Salary">
+		update salary set modes=#{modes},reals=#{reals},outTime=now(),state=1,namea=#{namea} where empId=#{emp.empId} and smonth =CONCAT(YEAR(CURDATE()),'-',IF(MONTH(CURDATE()) &lt; 10,CONCAT('0',MONTH(CURDATE())),MONTH(CURDATE())))
+	</update>
+	
+	<select id="selAll" parameterType="Salary" resultMap="SA">
+		SELECT * FROM salary a INNER JOIN employeeInfo b ON a.empId=b.empId
+			<where>
+				<if test="emp != null">
+				       <if test="emp.empName != null and emp.empName!='' ">
+					        empName like concat(concat('%',#{emp.empName},'%'))
+					    </if>
+				  </if>
+			</where>
+		order by sid desc
+	</select>
+	
+	<select id="selempId" parameterType="int" resultMap="SA">
+		SELECT * FROM salary a INNER JOIN employeeInfo b  ON a.empId=b.empId where a.empId=#{id}  order by sid desc
+	</select>
+	
+	<select id="addsel" parameterType="int" resultMap="SA">
+		SELECT * FROM salary  where empId=#{id} and  smonth=CONCAT(YEAR(CURDATE()),'-',IF(MONTH(CURDATE()) &lt; 10,CONCAT('0',MONTH(CURDATE())),MONTH(CURDATE())));
+	</select>
+	
+	<select id="selid" parameterType="int" resultMap="SA">
+		SELECT * FROM salary a INNER JOIN employeeInfo b  ON a.empId=b.empId where sid=#{id}
+	</select>
+</mapper>

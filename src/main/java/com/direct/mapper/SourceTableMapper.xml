@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 配置dao借口类的mapper的映射文件： -->
+<mapper namespace="com.direct.dao.ISourceTableDao">
+	<!-- 配置检索结果集时属性和字段的对应关系 -->
+	
+	<resultMap type="VehicleType" id="veTyMap">
+		<id property="vid" column="vid"/><!-- 主键字段 -->
+		<result column="vname" property="vname"/>
+	</resultMap>
+	
+	<!-- 采购申请总金额查询 -->
+	<select id="queryApply" parameterType="int" resultType="map">
+		select sum(money) from apply where month(appTime)=#{0} group by month(appTime)
+	</select>
+
+	<!-- 采购支出总金额查询 -->
+	<select id="queryCarBuying" parameterType="int" resultType="map">
+		select sum(totalPrice) from carBuying where month(buyTime)=#{0} group by month(buyTime)
+	</select>
+	
+	<!-- 每月购车数量 -->
+	<select id="queryCarBuyingCount" parameterType="int" resultType="map">
+		select sum(count) from carBuying where month(buyTime)=#{0} group by month(buyTime)
+	</select>
+	
+	<!--  获取所有入库数量 -->
+	<select id="queryWarehouseReceipt" parameterType="int" resultType="map">
+		select sum(number) from warehousereceipt  where month(time)=#{0} group by month(time)
+	</select>
+	 
+	<!-- 获取所有出库数量 -->
+	<select id="queryOutBoundOrder" parameterType="int" resultType="map">
+		select sum(number) from outboundorder  where month(time)=#{0} group by month(time)
+	</select>
+	
+	<!-- 通过车系查询车数 -->
+	<select id="queryCarBySid" parameterType="int" resultType="map">
+		select sum(number) from carinfo  where sid=#{0}
+	</select>
+	
+	<!-- 获取所有其他支出金额 -->
+	<select id="queryExpenditure" parameterType="int" resultType="map">
+		select sum(money) from expenditure where month(expTime)=#{0} group by month(expTime)
+	</select>
+	
+	<!-- 获取所有薪资支出金额 -->
+	<select id="querySalary" parameterType="int" resultType="map">
+		select sum(reals) from salary where month(outTime)=#{0} group by month(outTime)
+	</select>
+	
+	<!-- 获取所有销售收入金额 -->
+	<select id="querySale" parameterType="int" resultType="map">
+		select sum(receivable) from sale where month(saleTime)=#{0} group by month(saleTime)
+	</select>
+</mapper>

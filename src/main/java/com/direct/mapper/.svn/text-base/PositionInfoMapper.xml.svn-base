@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.IPositionInfoDao">
+	<resultMap type="PositionInfo" id="pos">
+ 			<id column="pid" property="pid"/>
+	 		<result column="pname" property="pname"/>
+	 		<result column="pids" property="pids"/>
+	 		<result column="remark" property="remark"/>
+	 		
+	 		<association property="dept" javaType="DepartmentInfo">
+	 			<id column="deptId" property="deptId"/>
+		  		<result column="deptName" property="deptName"/>
+		  		<result column="remark" property="remark"/>
+	 		</association>
+ 	</resultMap>
+ 	
+ 	<!-- 根据Id查询单条数据 -->
+ 	<select id="selPosId"  resultMap="pos">
+ 		select * from positioninfo pe inner join departmentInfo dt on pe.deptId=dt.deptId where pe.deptId=#{id} 
+ 	</select>
+ 	<!-- 查询所有职位数据 -->
+ 	<select id="selPos1"  resultMap="pos">
+ 		select * from positioninfo
+ 	</select>
+ 	
+ 	<!-- 查询所有数据 -->
+ 	<select id="selPos" resultMap="pos" parameterType="PositionInfo">
+ 		select * from positioninfo pe inner join departmentInfo dt on pe.deptId=dt.deptId where pname!='删除'
+ 		<if test="pname!=null and pname!=''">
+ 			and pname like concat(concat('%',#{pname},'%'))
+ 		</if>
+ 	</select>
+ 	<!-- 修改职位数据 -->
+ 	<update id="updatePos" parameterType="PositionInfo" >
+ 		update positioninfo set deptId=#{dept.deptId},pname=#{pname},remark=#{remark} where pid=#{pid}
+ 	</update>
+ 	<!-- 删除职位数据 -->
+ 	<delete id="deletePos"  parameterType="int">
+ 		update  positioninfo  set pname='删除' where  pid=#{pid}
+ 	</delete>
+ 	<!-- 添加职位数据 -->
+ 	<insert id="insertPos" parameterType="PositionInfo">
+ 		insert into positioninfo (deptId,pname,remark) values(#{dept.deptId},#{pname},#{remark})
+ 	</insert>
+ 	
+</mapper>

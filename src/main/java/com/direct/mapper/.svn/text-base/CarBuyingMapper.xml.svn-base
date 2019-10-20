@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- 配置dao借口类的mapper的映射文件： -->
+<mapper namespace="com.direct.dao.ICarBuyingDao">
+	<!-- 配置检索结果集时属性和字段的对应关系 -->
+	<resultMap type="CarBuying" id="carMap">
+		<id property="cId" column="cId"/><!-- 主键字段 -->
+		
+		<result column="count" property="count"/>
+		<result column="buyTime" property="buyTime"/>
+		<result column="totalPrice" property="totalPrice"/>
+	
+		<association property="appInfo" javaType="ApplyInfo" resultMap="appMaps" />
+		<association property="carInfo" javaType="CarInfo" resultMap="carMaps" />
+		
+	</resultMap>
+	
+
+	<resultMap type="CarInfo" id="carMaps">
+			<id column="cid" property="cid"/>
+			
+	 		<result column="sid" property="sid"/>
+	 		<result column="wid" property="wid"/>
+	 		<result column="cname" property="cname"/>
+	 		<result column="price" property="price"/>
+	 		<result column="number" property="number"/>
+	 		<result column="length" property="length"/>
+	 		<result column="width" property="width"/>
+	 		<result column="height" property="height"/>
+	 		<result column="wheelbase" property="wheelbase"/>
+	 		<result column="Tread" property="Tread"/>
+	 		<result column="curbWeight" property="curbWeight"/>
+	 		<result column="tyre" property="tyre"/>
+	 		<result column="tankVolume" property="tankVolume"/>
+	 		<result column="enginea" property="enginea"/>
+	 		<result column="displacement" property="displacement"/>
+	 		<result column="imga" property="imga"/>
+	 		<result column="imgb" property="imgb"/>
+	</resultMap>
+	
+	
+	<resultMap type="ApplyInfo" id="appMaps">
+		<id property="aId" column="aId"/><!-- 主键字段 -->
+		
+		<result column="appName" property="appName"/>
+		<result column="phone" property="phone"/>
+		<result column="money" property="money"/>
+		<result column="outmoney" property="outmoney"/>
+		<result column="inmoney" property="inmoney"/>
+		<result column="appTime" property="appTime" />
+		<result column="remark" property="remark"/>
+		<result column="state" property="state"/>
+		<result column="exaName" property="exaName"/>
+	</resultMap>
+	
+	
+	
+	
+	<!-- 添加 -->
+	<insert id="insertCar" parameterType="CarBuying">
+		insert into carBuying(aid,carId,count,buyTime,totalPrice) values(#{appInfo.aId},#{carInfo.cid},#{count},curdate(),#{totalPrice})
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="updateApp" parameterType="ApplyInfo">
+		update apply set outmoney=#{outmoney},inmoney=#{inmoney},state=#{state},exaName=#{exaName} where aId=#{aId}
+	</update>
+	
+	<!-- 删除 -->
+  		<delete id="deleteCar" parameterType="int">
+  			delete from carBuying where cId=#{cId}
+  		</delete>
+	
+	<!-- 查询 -->
+	<select id="selectCar" parameterType="CarBuying" resultMap="carMap">
+		select * from carBuying car inner join carInfo ca on car.carId=ca.cid inner join apply app on car.aid=app.aid order by car.cId desc
+		
+	</select>
+	
+
+
+</mapper>

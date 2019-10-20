@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.ILeaveInfoDao">
+
+	<resultMap type="LE" id="le">
+ 			<id column="id" property="Id"/>
+	 		<result column="beginTime" property="beginTime"/>
+	 		<result column="endTime" property="endTime"/>
+	 		<result column="submitTime" property="submitTime"/>
+	 		<result column="remark" property="remark"/>
+	 		<result column="state" property="state"/>
+	 		<result column="checkName" property="checkName"/>
+	 		
+	 		<association property="type" javaType="LT">
+	 			<id column="typeId" property="typeId"/>
+		 	<result column="typeName" property="typeName"/>
+		 	<result column="remark" property="remark"/>
+	 		</association>
+	 		
+	 		<association property="emp" javaType="EmployeeInfoEntity">
+	 			<id column="empId" property="empId"/>
+		 		<result column="empName" property="empName"/>
+		 		<result column="salary" property="salary"/>
+		 		<result column="sex" property="sex"/>
+		 		<result column="inTime" property="inTime"/>
+		 		<result column="outTime" property="outTime"/>
+		 		<result column="birthday" property="birthday"/>
+		 		<result column="cardId" property="cardId"/>
+		 		<result column="phone" property="phone"/>
+		 		<result column="email" property="email"/>
+		 		<result column="address" property="address"/>
+		 		<result column="state" property="state"/>
+		 		<result column="diploma" property="diploma"/>
+		 		<result column="sadmin" property="sadmin"/>
+		 		<result column="sPwd" property="sPwd"/>
+		 		<result column="remark" property="remark"/>
+		 		
+		 		<association property="pos" javaType="PositionInfo">
+		 			<id column="pid" property="pid"/>
+			 		<result column="pname" property="pname"/>
+			 		<result column="pids" property="pids"/>
+			 		<result column="remark" property="remark"/>
+			 		
+			 		<association property="dept" javaType="DepartmentInfo">
+			 			<id column="deptId" property="deptId"/>
+				  		<result column="deptName" property="deptName"/>
+				  		<result column="remark" property="remark"/>
+			 		</association>
+		 		</association>
+	 		</association>
+ 	</resultMap>
+ 	
+ 	<!-- 添加 -->
+	<insert id="addTe" parameterType="LE">
+		insert into leaveInfo(typeId,empId,beginTime,endTime,submitTime,remark,state,checkName) values(#{type.typeId},#{emp.empId},#{beginTime},#{endTime},#{submitTime},#{remark},#{state},#{checkName})
+	</insert>
+	
+	<!-- 修改1 -->
+	<update id="upTe" parameterType="LE">
+		update leaveInfo set state=#{state},checkName=#{checkName} where id=#{Id}
+	</update>
+	
+	<!-- 修改 查询-->
+	<select id="upsel" parameterType="int" resultMap="le">
+		select * from leaveInfo le inner join leavetype lt on le.typeId=lt.typeId inner join employeeInfo emp on le.empId=emp.empId where le.id=#{id} 
+	</select>
+	
+	<!-- 修改2 -->
+	<update id="upTe2" parameterType="LE">
+		update leaveInfo set typeId=#{type.typeId},beginTime=#{beginTime},endTime=#{endTime},remark=#{remark} where id=#{Id} and state=0
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delTe" parameterType="LE">
+		delete from leaveInfo where Id=#{id}
+	</delete>
+	
+	<!-- 查询一条 -->
+	<select id="selTeId" parameterType="int" resultMap="le">
+		select * from leaveInfo le inner join leavetype lt on le.typeId=lt.typeId inner join employeeInfo emp on le.empId=emp.empId where le.empId=#{id} order by  id  desc
+	</select>
+	
+	<!-- 分页查询(使用插件) -->
+	<select id="selTe" parameterType="LE" resultMap="le">
+		select * from leaveInfo le inner join leavetype lt on le.typeId=lt.typeId inner join employeeInfo em on le.empId=em.empId inner join positioninfo pe on em.pid=pe.pid inner join departmentInfo dt on pe.deptId=dt.deptId
+		<where>
+			<if test="emp != null">
+			       <if test="emp.empName != null and emp.empName!='' ">
+				        empName like concat(concat('%',#{emp.empName},'%'))
+				    </if>
+			  </if>
+		</where>
+		order by id desc
+	</select>
+</mapper>

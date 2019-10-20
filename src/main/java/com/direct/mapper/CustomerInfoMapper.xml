@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.ICustomerDao">
+	<resultMap type="CustomerInfo" id="customerMap">
+		<id property="cid" column="cid"/>
+		<result property="name" column="name"/>
+		<result property="phone" column="phone"/>
+		<result property="address" column="address"/>
+		<result property="idcard" column="idcard"/>
+		<result property="consumption" column="consumption"/>
+	</resultMap>
+	
+	<select id="queryCustomer" parameterType="CustomerInfo" resultMap="customerMap">
+		select *from customerinfo
+		<where>
+			<if test="phone!=''">
+				phone like "%"#{phone}"%"
+			</if>
+		</where> 
+		order by cid desc
+	</select>
+	
+	<select id="queryCustomerById" parameterType="int" resultMap="customerMap">
+		select *from customerinfo where cid=#{cid}
+	</select>
+	
+	<select id="isExist" parameterType="String" resultType="int">
+		select count(1) from customerinfo where phone=#{phone}
+	</select>
+	
+	<insert id="insertCustomer" parameterType="CustomerInfo">
+		insert into customerinfo values(0,#{name},#{phone},#{pwd},#{address},#{idcard},0)
+	</insert>
+	
+	<update id="updateCustomer" parameterType="CustomerInfo">
+		update customerinfo set name=#{name},phone=#{phone},address=#{address},idcard=#{idcard},consumption=#{consumption} where cid=#{cid}
+	</update>
+	
+	<delete id="deleteCustomer" parameterType="int">
+		delete from customerinfo where cid=#{cid}
+	</delete>
+	<select id="login" parameterType="String" resultType="int">
+		select count(1) from customerinfo where phone=#{phone} and pwd=#{pwd}
+	</select>
+	
+	<!-- 查询员工信息 -->
+	<select id="selectById" resultMap="customerMap">
+		select *from customerinfo  			
+	</select>
+</mapper>

@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/group3/!svn/ver/619/4SShop/4SShop/src/main/java/com/direct/mapper
+END
+RecruitmentInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/group3/!svn/ver/567/4SShop/4SShop/src/main/java/com/direct/mapper/RecruitmentInfoMapper.xml
+END
+CustomerInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/mapper/CustomerInfoMapper.xml
+END
+DepartmentInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/group3/!svn/ver/455/4SShop/4SShop/src/main/java/com/direct/mapper/DepartmentInfoMapper.xml
+END
+PositionInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/group3/!svn/ver/463/4SShop/4SShop/src/main/java/com/direct/mapper/PositionInfoMapper.xml
+END
+CarInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/mapper/CarInfoMapper.xml
+END
+CarBuyingMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/group3/!svn/ver/560/4SShop/4SShop/src/main/java/com/direct/mapper/CarBuyingMapper.xml
+END
+SaleMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/group3/!svn/ver/560/4SShop/4SShop/src/main/java/com/direct/mapper/SaleMapper.xml
+END
+VehicleSystemmapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/group3/!svn/ver/619/4SShop/4SShop/src/main/java/com/direct/mapper/VehicleSystemmapper.xml
+END
+ApplyMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/mapper/ApplyMapper.xml
+END
+Expenditure.xml
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/group3/!svn/ver/586/4SShop/4SShop/src/main/java/com/direct/mapper/Expenditure.xml
+END
+SalaryMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/group3/!svn/ver/610/4SShop/4SShop/src/main/java/com/direct/mapper/SalaryMapper.xml
+END
+EmployeeInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/group3/!svn/ver/614/4SShop/4SShop/src/main/java/com/direct/mapper/EmployeeInfoMapper.xml
+END
+LeaveTypeMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/group3/!svn/ver/441/4SShop/4SShop/src/main/java/com/direct/mapper/LeaveTypeMapper.xml
+END
+KaoQinInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/group3/!svn/ver/610/4SShop/4SShop/src/main/java/com/direct/mapper/KaoQinInfoMapper.xml
+END
+HireInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/group3/!svn/ver/614/4SShop/4SShop/src/main/java/com/direct/mapper/HireInfoMapper.xml
+END
+MakeAnAppointment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/group3/!svn/ver/509/4SShop/4SShop/src/main/java/com/direct/mapper/MakeAnAppointment.xml
+END
+LeaveInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/group3/!svn/ver/610/4SShop/4SShop/src/main/java/com/direct/mapper/LeaveInfoMapper.xml
+END
+SourceTableMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/group3/!svn/ver/619/4SShop/4SShop/src/main/java/com/direct/mapper/SourceTableMapper.xml
+END
+StoreInfoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/group3/!svn/ver/486/4SShop/4SShop/src/main/java/com/direct/mapper/StoreInfoMapper.xml
+END

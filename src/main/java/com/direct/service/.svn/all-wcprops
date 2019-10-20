@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/group3/!svn/ver/619/4SShop/4SShop/src/main/java/com/direct/service
+END
+IStoreInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/group3/!svn/ver/486/4SShop/4SShop/src/main/java/com/direct/service/IStoreInfoService.java
+END
+ISourceTableService.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/group3/!svn/ver/619/4SShop/4SShop/src/main/java/com/direct/service/ISourceTableService.java
+END
+ILeaveInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/group3/!svn/ver/473/4SShop/4SShop/src/main/java/com/direct/service/ILeaveInfoService.java
+END
+IRecruitmentInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/group3/!svn/ver/571/4SShop/4SShop/src/main/java/com/direct/service/IRecruitmentInfoService.java
+END
+IDepartmentInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/group3/!svn/ver/464/4SShop/4SShop/src/main/java/com/direct/service/IDepartmentInfoService.java
+END
+IPositionInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/group3/!svn/ver/463/4SShop/4SShop/src/main/java/com/direct/service/IPositionInfoService.java
+END
+ICarInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/service/ICarInfoService.java
+END
+ICarBuyingService.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/service/ICarBuyingService.java
+END
+ISaleService.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/group3/!svn/ver/532/4SShop/4SShop/src/main/java/com/direct/service/ISaleService.java
+END
+IApplyService.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/service/IApplyService.java
+END
+ISalaryService.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/group3/!svn/ver/610/4SShop/4SShop/src/main/java/com/direct/service/ISalaryService.java
+END
+IEmployeeInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/group3/!svn/ver/539/4SShop/4SShop/src/main/java/com/direct/service/IEmployeeInfoService.java
+END
+IExpenditureService.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/group3/!svn/ver/589/4SShop/4SShop/src/main/java/com/direct/service/IExpenditureService.java
+END
+ILeaveTypeService.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/group3/!svn/ver/415/4SShop/4SShop/src/main/java/com/direct/service/ILeaveTypeService.java
+END
+IKaoQinInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/group3/!svn/ver/578/4SShop/4SShop/src/main/java/com/direct/service/IKaoQinInfoService.java
+END
+CopyOfIDepartmentInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/service/CopyOfIDepartmentInfoService.java
+END
+ICustomerService.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/group3/!svn/ver/534/4SShop/4SShop/src/main/java/com/direct/service/ICustomerService.java
+END
+MakeAnAppointmentService.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/group3/!svn/ver/509/4SShop/4SShop/src/main/java/com/direct/service/MakeAnAppointmentService.java
+END
+IVehicleSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/group3/!svn/ver/571/4SShop/4SShop/src/main/java/com/direct/service/IVehicleSystem.java
+END
+IHireInfoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/group3/!svn/ver/615/4SShop/4SShop/src/main/java/com/direct/service/IHireInfoService.java
+END

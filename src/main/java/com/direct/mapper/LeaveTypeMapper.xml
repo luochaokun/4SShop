@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.dao.ILeaveTypeDao">
+	<resultMap type="LT" id="lt">
+ 		<id column="typeId" property="typeId"/>
+	 	<result column="typeName" property="typeName"/>
+	 	<result column="remark" property="remark"/>
+ 	</resultMap>
+	
+	
+	<!-- 查询一条 -->
+	<select id="selTypeId" parameterType="int" resultMap="lt">
+		select * from leavetype where typeId=#{id}
+	</select>
+	
+	<select id="selType" resultMap="lt">
+		select * from leavetype
+	</select>
+</mapper>

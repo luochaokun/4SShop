@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.direct.dao.IRecruitmentInfoDao">
+  	<resultMap type="RecruitmentInfo" id="recMap">
+  		<id column="rid" property="rid"/>
+  		<result column="requires" property="requires"/>
+  		<result column="describes" property="describes"/>
+  		<result column="beginTime" property="beginTime"/>
+  		<result column="endTime" property="endTime"/>
+  		<result column="count" property="count"/>
+  		<result column="diploma" property="diploma"/>
+  		<result column="remark" property="remark"/>
+  		<!-- 关联职位 -->
+  		<association property="pos" javaType="PositionInfo">
+  			<id column="pid" property="pid"/>
+  			<result column="pname" property="pname"/>
+  		</association>
+  		<!-- 关联部门 -->
+  		<association property="dept" javaType="DepartmentInfo">
+  			<id column="deptId" property="deptId"/>
+  			<result column="deptName" property="deptName"/>
+  		</association>
+  	</resultMap>
+  	<!-- 分页查询 -->
+  	<select id="select" parameterType="RecruitmentInfo" resultMap="recMap">
+  		select * from RecruitmentInfo re inner join positioninfo po on po.pid=re.pid inner join  departmentInfo de on de.deptId=re.deptId  
+
+  	</select>
+  	<!-- 添加消息 -->
+  	<insert id="insert" parameterType="RecruitmentInfo">
+  		insert into RecruitmentInfo(deptId,pid,requires,describes,beginTime,endTime,count,diploma,remark) values
+  		(#{dept.deptId},#{pos.pid},#{requires},#{describes},#{beginTime},#{endTime},#{count},#{diploma},#{remark})
+  	</insert>
+  	<!-- 删除消息 -->
+  	<delete id="delete" parameterType="RecruitmentInfo">
+  		delete from RecruitmentInfo where rid in
+  		<foreach collection="list" item="rid" open="(" separator="," close=")">
+  			#{rid}
+  		</foreach>
+  	</delete>
+  	
+  	<select id="qiantaiselect" resultMap="recMap">
+  		select * from RecruitmentInfo
+  	</select>
+  </mapper>

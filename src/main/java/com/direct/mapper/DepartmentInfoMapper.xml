@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 配置dao接口映射Mapper文件 -->
+  <mapper namespace="com.direct.dao.IDepamtmentInfoDao">
+  
+	  <!-- 配置属性名和字段名的关联 -->
+	  <resultMap type="DepartmentInfo" id="depMap">
+	  		<id column="deptId" property="deptId"/>
+	  		<result column="deptName" property="deptName"/>
+	  		<result column="remark" property="remark"/>
+	  </resultMap>
+  		
+  		<!-- 添加部门信息 -->
+  	  <insert id="insertDep" parameterType="DepartmentInfo">
+  	  		insert into departmentInfo (deptName,remark) values(#{deptName},#{remark})
+  	  </insert>	
+  	  
+  		<!-- 修改部门信息 -->
+  	  <update id="updateDep" parameterType="DepartmentInfo">
+  			update departmentInfo set deptName=#{deptName},remark=#{remark} where deptId=#{deptId}
+  	  </update>
+  		
+  		<!-- 删除部门信息 -->
+  		<delete id="deleteDep" parameterType="int">
+  			update departmentInfo set deptName='删除'  where deptId=#{deptId}
+  		</delete>
+  		
+  		<!-- 分页查询部门信息 -->
+  		<select id="selectDep" parameterType="DepartmentInfo" resultMap="depMap">
+  			select * from departmentInfo  where deptName!='删除' 
+  			<if test="deptName!=null and deptName!=''">
+  				and deptName like concat(concat('%',#{deptName},'%'))
+  			</if>
+  			
+  		</select>
+  		<!-- 查询部门信息 -->
+  		<select id="selectDepById" resultMap="depMap">
+  			select * from departmentInfo  			
+  		</select>
+  		<!-- 查询部门总条数 -->
+  		<select id="" resultMap="depMap">
+  			select count(1) from departmentInfo
+  		</select>
+  </mapper>
